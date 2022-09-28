@@ -1,0 +1,5 @@
+zee 100
+hgf 700
+yam 200
+tea 8
+jojo 7890
