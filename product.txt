@@ -3,3 +3,6 @@ hgf 700
 yam 200
 tea 8
 jojo 7890
+p1tie 789
+cedr 6789
+omo 098

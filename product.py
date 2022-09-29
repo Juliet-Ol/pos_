@@ -38,8 +38,8 @@ def product_menu():
         p1 = Product(product_name, product_price)
         
         print (p1)
-        text_file.write(f"{p1.product_name} {p1.product_price}\n").txt
-        text_file.close  
+        text_file.write(f"{p1.product_name} {p1.product_price}\n")
+        text_file.close()  
 
         print('\n')
         print(f"new product {product_name}  {product_price} has been created")

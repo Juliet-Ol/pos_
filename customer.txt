@@ -1,23 +1,10 @@
-ju ag 89
-johnjuju yu 67ju agutu 7654
-yui 567 7654
-  
-first_name last_name mobile_number
-my name is juliet ju 
-  
-{first_name} {last_name} {mobile_number}
-dfg hjk t654
-qw2 er3 654
-  
-just me 4567
-yours truly 1234567
-john kariuki 076532
-hgf lhgfs 134567
-kjhgf lkjhgf 09876
-asdf qwe 12345
-pole hope 7654
-light shine 123456
-tic toc 09876
-poiuyt poiny 098765
-09876 7890 09887
-hey there 456789
+
+1. Juliet Agutu  07331234567
+2. Elijah Elijah 0722554321
+3. Joyce Njeru 07544332287
+4. Otto Stefan 0111288776
+5. justus Murimi 01234458765
+6. Jupiter Mark 0756443229
+7. Peter Paul 012398764
+8. Hannington Mor 074578322445
+9. Paul Junior 01111987656

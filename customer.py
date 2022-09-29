@@ -1,75 +1,16 @@
 class Customer:    
     
-    def __init__(self, first_name, last_name, mobile_number):
+    def __init__(self,  first_name, last_name, mobile_number):
 
-        # self.customer_id = customer_Id
+        # self.customer_id = customer_id
         self.first_name = first_name
         self.last_name = last_name
         self.mobile_number = mobile_number    
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} {self.mobile_number}\n"      
-
-    # class methods
-    # def create_customer(first_name, last_name, mobile_number):
-    #     new_customer = Customer(first_name, last_name, mobile_number) 
-        # f = open("customer.txt", "a")
-        # f.write(new_customer)
-        # f.close() 
-        
-        # text_file = open("customer.txt","a")
-        # for element in Customer():
-        #     text_file.write(element+"\n")
-        #     text_file.close
-
-        
-        # return new_customer
-
-    # customer_list = []
+        return f" {self.first_name} {self.last_name} {self.mobile_number}\n"        
     
-    # def save_customer(new_customer):              
-    #     # Customer.customer_list.append(new_customer)
 
-    #     # f = open("customer.txt", "a")
-    #     # f.write(new_customer)
-    #     # f.close() 
-
-    #     # a_list = ["abc", "def", "ghi"]
-
-    #     # customer_list = []
-    #     text_file = open("customer.txt","a")
-    #     for element in customer_list:
-    #         # for i in element:
-    #         print (element)
-    #         text_file.write(element+"\n")
-    #     text_file.close  
-
-
-        # return(Customer.customer_list)
-
-
-
-
-
-
-      
-
- 
-
-# def search_name():
-#     letter = input("enter letter: ").upper()
-#     IniFile = open ("customer.txt","r")
-#     for s in IniFile:
-#         if s[0] == letter:
-                    
-#             print(s)
-
-# search_name()
-
-
-# calling function
-
-# customer_list = []
 def customer_menu():
     print("Welcome to the customer menu")
     
@@ -94,39 +35,59 @@ def customer_menu():
 
             print("mobile_number")
             mobile_number = input()
-
-            # create and save the customer
-            
                        
-            # new_customer = Customer.create_customer(first_name, last_name, mobile_number)
-            # saved_customer = Customer.save_customer(new_customer)
-            # customer_list.append(new_customer)
-           
-            # customer_list.append(add_customer)
-            
-            
+            count = 0
+            with open('customer.txt') as fp:
+                for line in fp:
+                    if line.strip():
+                        count += 1
+
+            print('number of non-blank lines', count)
+                        
             p1 = Customer(first_name, last_name, mobile_number)
             text_file = open("customer.txt","a+")
-
-            print (p1)
+            text_file.readline()
+            update_count = count +1
+            print (p1)            
             
+            customer_list = []
+            person = (f"{update_count}. {p1.first_name} {p1.last_name} {p1.mobile_number}")
             
-            text_file.write(f"{p1.first_name} {p1.last_name} {p1.mobile_number}\n").txt
-            text_file.close  
+            customer_list.append(person)
+            print(customer_list)
+            for person in customer_list:
+                
+                try:
+                    text_file.write(person + "\n").txt
+                except:
+                    print("there is an error")  
+                      
+                
+            text_file.close()
             
             print('\n')
-            print(f"new customer {first_name} {last_name} {mobile_number} has been created")
+            print(f"new customer  {first_name} {last_name} {mobile_number} has been created")
             print('\n')
 
             
 
         elif short_code == '2':
             print("search customer to delete")   
-
-            p1 = Customer(first_name, last_name, mobile_number)               
-            search_customer = input()
+            
+            def search_name():
+                letter = input("enter letter: ").upper()
+                IniFile = open ("customer.txt","r")
+                for s in IniFile:
+                    if s[0] == letter:
+                    
+                        print(s)
+            search_name() 
+                         
+            # search_customer = input()
             if Customer(first_name, mobile_number):
-                    search_customer = p1(search_customer)
+                    
+                    # search_customer = p1(search_customer)
+                    search_customer = Customer(first_name, last_name, mobile_number) 
                     print(f"{search_customer.first_name} {search_customer.last_name}")
                     print('-' * 20)
 
@@ -135,16 +96,16 @@ def customer_menu():
             else:
                     print("That customer does not exist")
 
-            # with open("customer.txt", "r") as file_input:
-            #     with open("newfile.txt", "w") as output: 
-            #         for line in file_input:
-            #             if line.strip("\n") != "nickname_to_delete":
-            #         output.write(line)           
+            with open("customer.txt", "r") as file_input:
+                with open("newfile.txt", "w") as output: 
+                    for line in file_input:
+                        if line.strip("\n") != "nickname_to_delete":
+                            output.write(line)           
 
 
-        else:
+        elif short_code == '5':
             from pos import main_menu
-            short_code == '5'
+        
             main_menu()
 
            
@@ -152,7 +113,4 @@ def customer_menu():
 
 if __name__ == "__main__":
 
-    customer_menu()             
-
-
-
+    customer_menu()        
