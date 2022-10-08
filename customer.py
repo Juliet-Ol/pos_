@@ -60,7 +60,7 @@ def customer_menu():
             for person in customer_list:
                 
                 try:
-                    text_file.write(person + "\n").txt
+                    text_file.write(person + "\n")
                 except:
                     print("there is an error")  
                       
@@ -103,25 +103,25 @@ def customer_menu():
 
                        
 
-            #to bring everything in the database
+            #to bring everything in the text file
             with open("customer.txt", "r") as f:
                 print (f.read())  
 
-
+        
 # Update customer details             
         elif short_code == '3':
-
             import os
 
+            
             original_file = "newfile.txt"
             temp_file = "temp.txt"
 
             string_to_update = [input("Enter what you want to update: ")]
-            word_to_update = string_to_update[0]
+            to_update = string_to_update[0]
 
             with open("newfile.txt", "r") as fp:
                 for line in fp:
-                    if line != None and word_to_update in line:
+                    if line != None and to_update in line:
                         print(line)
 
             string_to_replace_with = input("Enter name you want to replace with: ")
@@ -139,89 +139,31 @@ def customer_menu():
                         output.write(line)
 
             # replace file with original name
-            os.replace('temp.txt', 'newfile.txt')            
-
-
-#Delete a customer 
-        elif short_code == '4':
-            print("search for a customer")  
-            print("""use this short codes: 
-                press 1 - Search by first name.
-                press 2 - Search by second name.
-                press 3 - Phone number. 
-                press 4 - Search by customer id.
-                press 5 - Print all items in the file""") 
-
-            short_code = input()
-
-            search_by = input("Search:....").upper()
-            with open("newfile.txt","r") as fp:
-                for line in fp:
-                    name = line.upper()
-                    line_list = name.split( )
-                    if line_list[1] == search_by:
-                        print(line)
-
-                    elif line_list[2] == search_by:
-                        print(line) 
-
-                    elif line_list[3] == search_by: 
-                        print(line)
-
-                    elif line_list[0] == search_by + ".":
-                        print(line)      
-
-                    else:
-                        with open("newfile.txt", "r") as file_input:
-                            with open("tempfile.txt", "w") as output: 
-                                for line in file_input:
-                                    if line.strip("\n") != "nickname_to_delete":
-                                        output.write(line) 
-                                        print(line)  
-
-                                        line = line.replace(search_by, "")
-                                    output.write(line)  
-   
-            # replace file with original name
             os.replace('temp.txt', 'newfile.txt') 
 
-        #Delete searched entry
-        # elif short_code == '3':
+        
+#Delete a customer 
+        elif short_code == '4':
+            def deleting_line():
+                customer_to_delete = input("Search customer id: ")
+                
+                with open("customer.txt", "r") as fp:
+                    with open ('temp.txt', 'w') as temp:
 
-        #     import os
+                        for line in fp:
+                            line_list = line.split( )
+                            # print(line_list[3])
+                            if line_list[0] != customer_to_delete+".":
+                                print(line)
+                                temp.write(line)
+                import os              
 
-        #     original_file = "newfile.txt"
-        #     temp_file = "temp.txt"
-
-        #     string_to_delete = [input("Enter name you want to delete: ")]
-        #     word_to_delete =string_to_delete[0]
-
-        #     with open("newfile.txt", "r") as fp:
-        #         for line in fp:
-        #             if line != None and word_to_delete in line:
-        #                 print(line)
-
-        #     string_to_replace_with = input("Enter name you want to replace with: ")
-        #     with open(original_file, "r") as my_input:
-        #         with open(temp_file, "w") as output:
-        #             for line in my_input:
-        #                 for word in string_to_delete:
-        #                     # line_list = line.split( )
-        #                     # string_to_replace_with = input("Enter name you want to replace with: ")
-        #                     # print(line_list[3])
-        #                     if line != None and word in line:
-        #                         print(line)
-                 
-        #                     line = line.replace(word," ")
-        #                 output.write(line)
-
-        #     # replace file with original name
-            # os.replace('temp.txt', 'newfile.txt')    
+                os.replace('temp.txt', 'customer.txt')
+            deleting_line()
 
 
         elif short_code == '5':
-            from pos import main_menu
-        
+            from pos import main_menu        
             main_menu()
 
            
