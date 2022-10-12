@@ -1,8 +1,5 @@
-zee 100
-hgf 700
-yam 200
-tea 8
-jojo 7890
-p1tie 789
-cedr 6789
-omo 098
+1. laptop 90000 5
+2. phone 10000 10
+3. charger 1000 10
+4. earphone 1100 15
+5. mouse 2000 10

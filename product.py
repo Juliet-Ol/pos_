@@ -17,15 +17,16 @@ def product_menu():
     
     while True:
         print("""use this short codes: 
-        press 1 - add a product, 
+        press 1 - Create a product, 
         press 2 - search a product,
-        press 3 - delete a product, 
-        press 4 - update product
-        press 5 - go back to main menu""") 
+        press 3 - list all products,
+        press 4 - delete a product, 
+        press 5 - update product
+        press 6 - go back to main menu""") 
 
         short_code = input()
 
-    #Create a product
+#Create a product
         text_file = open("product.txt","a+")
         if short_code == '1':
             print("create a new product") 
@@ -99,14 +100,53 @@ def product_menu():
                     elif line_list[0] == search_by + ".":
                         print(line)    
 
-            # Print all the data on the database
-            with open("product.txt", "r") as f:
-                print (f.read())  
+# Print all the data on the database
+        elif short_code == 3:
+            def print_all_products():    
+                with open("product.txt", "r") as f:
+                    print (f.read())
+            print_all_products()         
+
+
+# Update Product details                         
+        elif short_code == '5':
+
+            import os         
+            
+
+            def update_line():
+                product_to_update = input("Search product id: ")          
+                
+                
+                with open("product.txt", "r") as fp:
+                    with open ('temp.txt', 'w') as temp:
+                        for line in fp:
+                            line_list = line.split( )                        
+                                                    
+                            
+                            if line_list[0] == product_to_update +".":
+                                print(line)
+
+                                pn = input('Enter product name:....')
+                                pp = input('Enter product price:...') 
+                                pq = input('Enter product quantity....')  
+
+                                line=line.replace(line_list[1],pn)
+                                line=line.replace(line_list[2],pp)
+                                line=line.replace(line_list[3],pq)                                   
+                                    
+                                                                
+                                print(line)
+                            temp.write(line)
+                import os              
+
+                os.replace('temp.txt', 'product.txt')
+            update_line()                    
 
 
 #Delete product
 
-        elif short_code == '3':
+        elif short_code == '4':
             def deleting_line():
                 product_to_delete = input("Search product id: ")
                 
