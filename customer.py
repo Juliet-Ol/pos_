@@ -21,55 +21,57 @@ def customer_menu():
         press 2 - Search a customer.         
         press 3 - Update customer details.
         press 4 - Delete a customer.
-        press 5 - go back to main menu""") 
+        press 5 - list all customers
+        press 6 - go back to main menu""") 
 
         short_code = input()
 
 #Create a customer
         if short_code == '1':
-            print("create a new customer")
+            def create_a_customer():
+                print("create a new customer")
 
-            print("first name.....")  
-            first_name = input()
+                print("first name.....")  
+                first_name = input()
 
-            print("last name....")
-            last_name = input()
+                print("last name....")
+                last_name = input()
 
-            print("mobile_number")
-            mobile_number = input()
-                       
-            count = 0
-            with open('customer.txt') as fp:
-                for line in fp:
-                    if line.strip():
-                        count += 1
-
-            print('number of non-blank lines', count)
+                print("mobile_number")
+                mobile_number = input()
                         
-            p1 = Customer(first_name, last_name, mobile_number)
-            text_file = open("customer.txt","a+")
-            text_file.readline()
-            update_count = count +1
-            print (p1)            
-            
-            customer_list = []
-            person = (f"{update_count}. {p1.first_name} {p1.last_name} {p1.mobile_number}")
-            
-            customer_list.append(person)
-            print(customer_list)
-            for person in customer_list:
+                count = 0
+                with open('customer.txt') as fp:
+                    for line in fp:
+                        if line.strip():
+                            count += 1
+
+                print('number of non-blank lines', count)
+                            
+                p1 = Customer(first_name, last_name, mobile_number)
+                text_file = open("customer.txt","a+")
+                text_file.readline()
+                update_count = count +1
+                print (p1)            
                 
-                try:
-                    text_file.write(person + "\n")
-                except:
-                    print("there is an error")  
-                      
+                customer_list = []
+                person = (f"{update_count}. {p1.first_name} {p1.last_name} {p1.mobile_number}")
                 
-            text_file.close()
-            
-            print('\n')
-            print(f"new customer  {first_name} {last_name} {mobile_number} has been created")
-            print('\n')
+                customer_list.append(person)
+                print(customer_list)
+                for person in customer_list:
+                    
+                    try:
+                        text_file.write(person + "\n")
+                    except:
+                        print("there is an error")                        
+                    
+                text_file.close()
+                
+                print('\n')
+                print(f"new customer  {first_name} {last_name} {mobile_number} has been created")
+                print('\n')
+            create_a_customer()    
 
 #Search for a customer     
         
@@ -80,7 +82,7 @@ def customer_menu():
                 press 2 - Search by second name.
                 press 3 - Phone number. 
                 press 4 - Search by customer id.
-                press 5 - Print all items in the file""") 
+                """) 
 
             short_code = input()
 
@@ -101,19 +103,15 @@ def customer_menu():
                     elif line_list[0] == search_by + ".":
                         print(line)                        
 
-            #to bring everything in the text file
-            with open("customer.txt", "r") as f:
-                print (f.read())  
-
-        
-# Update customer details             # Update customer details             
+       
+# Update customer details                         
         elif short_code == '3':
 
             import os         
             
 
             def update_line():
-                customer_to_update = input("Search customer id: ")          
+                customer_to_update = input("Search customer id to update: ")          
                 
                 
                 with open("customer.txt", "r") as fp:
@@ -133,7 +131,7 @@ def customer_menu():
                                 line=line.replace(line_list[2],ln)
                                 line=line.replace(line_list[3],mn)                                   
                                     
-                                # line = line.replace(line, (customer_to_update + ' ' + fn[1] +' ' + ln + ' ' + mn))
+                                # line = line.replace(line_list, (customer_to_update + ' ' + fn[1] +' ' + ln + ' ' + mn))
                                 
                                 print(line)
                             temp.write(line)
@@ -146,7 +144,7 @@ def customer_menu():
 #Delete a customer 
         elif short_code == '4':
             def deleting_line():
-                customer_to_delete = input("Search customer id: ")                
+                customer_to_delete = input("Search customer id to delete:... ")                
                 with open("customer.txt", "r") as fp:
                     with open ('temp.txt', 'w') as temp:
 
@@ -161,8 +159,13 @@ def customer_menu():
                 os.replace('temp.txt', 'customer.txt')
             deleting_line()
 
-
+#to list everythin in the file
         elif short_code == '5':
+            with open("customer.txt", "r") as f:
+                print (f.read())      
+
+
+        elif short_code == '6':
             from pos import main_menu        
             main_menu()
 
