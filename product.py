@@ -1,11 +1,14 @@
+
+
+
 class Product:    
     
     def __init__(self, product_name, product_price, product_quantity):
 
         # self.product_id = product_id
         self.product_name = product_name
-        self.product_price = product_price
-        self.product_quantity = product_quantity    
+        self.product_price = float(product_price)
+        self.product_quantity = int(product_quantity)    
 
     def __str__(self):
         return f"{self.product_name} {self.product_price} {self.product_quantity} \n"         
@@ -18,8 +21,8 @@ def product_menu():
     while True:
         print("""use this short codes: 
         press 1 - Create a product, 
-        press 2 - search a product,
-        press 3 - list all products,
+        press 2 - search a product, 
+        press 3 - list all products,       
         press 4 - delete a product, 
         press 5 - update product
         press 6 - go back to main menu""") 
@@ -29,49 +32,56 @@ def product_menu():
 #Create a product
         text_file = open("product.txt","a+")
         if short_code == '1':
-            print("create a new product") 
+            def create_product():
+                print("create a new product") 
 
-            print("product name.....")  
-            product_name = input()
+                print("product name.....")  
+                product_name = input()
 
-            print("product price....")
-            product_price = input()
+                print("product price....")
+                product_price = float(input())               
 
-            print("product quantity....")
-            product_quantity = input()
+                print("product quantity....")
+                product_quantity = int(input())
 
-            count = 0
-            with open('product.txt') as fp:
-                for line in fp:
-                    if line.strip():
-                        count += 1
+                count = 0
+                with open('product.txt') as fp:
+                    for line in fp:
+                        if line.strip():
+                            count += 1
 
-            print('number of non-blank lines', count)
-                        
-            p1 = Product(product_name, product_price, product_quantity)
-            text_file = open("product.txt","a+")
-            text_file.readline()
-            update_count = count +1
-            print (p1)            
-            
-            product_list = []
-            product = (f"{update_count}. {p1.product_name} {p1.product_price} {p1.product_quantity}")
-            
-            product_list.append(product)
-            print(product_list)
-            for product in product_list:
+                print('number of non-blank lines', count)
+                            
+                p1 = Product(product_name, product_price, product_quantity)
+                text_file = open("product.txt","a+")
+                text_file.readline()
+                update_count = count +1
+                print (p1)            
                 
-                try:
-                    text_file.write(product + "\n").txt
-                except:
-                    print(" ")                      
+                product_list = []
+                product = (f"{update_count}. {p1.product_name} {p1.product_price} {p1.product_quantity}")
                 
-            text_file.close()    
-            
-            print('\n')
-            print(f"new product {product_name} {product_price} {product_quantity} has been created")
-            print('\n')
+                product_list.append(product)
+                print(product_list)
+                for product in product_list:
+                    
+                    try:
+                        text_file.write(product + "\n").txt
+                    except:
+                        print(" ")                      
+                    
+                text_file.close()    
+                
+                print('\n')
+                print(f"new product {product_name} {product_price} {product_quantity} has been created")
+                print('\n')
 
+                
+                return(product_price)
+                
+            create_product()  
+
+        
 
 #Search for a product    
 
@@ -81,7 +91,7 @@ def product_menu():
                 press 1 - Search product by name.
                 press 2 - price.
                 press 3 - product id. 
-                press 5 - print all products""") 
+                """) 
 
             short_code = input()
 
@@ -100,14 +110,16 @@ def product_menu():
                     elif line_list[0] == search_by + ".":
                         print(line)    
 
-# Print all the data on the database
-        elif short_code == 3:
-            def print_all_products():    
-                with open("product.txt", "r") as f:
-                    print (f.read())
-            print_all_products()         
+# Print all products
 
-
+        elif short_code == '3':            
+            with open("product.txt", "r") as stock:
+                with open("temp.txt", "w") as temp:
+                    print (stock.read())            #prints stock available
+                    for line in stock:
+                        if line == stock:
+                            # stock.append(line)
+                            print(line)          
 # Update Product details                         
         elif short_code == '5':
 
@@ -141,7 +153,9 @@ def product_menu():
                 import os              
 
                 os.replace('temp.txt', 'product.txt')
-            update_line()                    
+            update_line()  
+
+                        
 
 
 #Delete product
@@ -165,7 +179,7 @@ def product_menu():
             deleting_line()                             
                          
 
-        elif short_code == '5':
+        elif short_code == '6':
             from pos import main_menu
         
             main_menu()
