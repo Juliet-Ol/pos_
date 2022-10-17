@@ -16,7 +16,9 @@ class Product:
  
 
 def product_menu():
-    print("view different products available")
+    print('*' *49)
+    print(f"\t\t Welcome to the product menu")
+    print('*' *49)
     
     while True:
         print("""use this short codes: 
@@ -28,6 +30,7 @@ def product_menu():
         press 6 - go back to main menu""") 
 
         short_code = input()
+        print('*' *49)
 
 #Create a product
         text_file = open("product.txt","a+")
@@ -50,13 +53,13 @@ def product_menu():
                         if line.strip():
                             count += 1
 
-                print('number of non-blank lines', count)
+                # print('number of non-blank lines', count)
                             
                 p1 = Product(product_name, product_price, product_quantity)
                 text_file = open("product.txt","a+")
                 text_file.readline()
                 update_count = count +1
-                print (p1)            
+                # print (p1)            
                 
                 product_list = []
                 product = (f"{update_count}. {p1.product_name} {p1.product_price} {p1.product_quantity}")
@@ -73,7 +76,7 @@ def product_menu():
                 text_file.close()    
                 
                 print('\n')
-                print(f"new product {product_name} {product_price} {product_quantity} has been created")
+                print(f"New product:... {update_count}. {product_name} price {product_price} and quantity {product_quantity} has been created.")
                 print('\n')
 
                 
@@ -96,45 +99,54 @@ def product_menu():
             short_code = input()
 
             
-            search_by = input("Search:....").upper()
+            search_by = input("Search product:....").lower()
+            print('*' *49) 
             with open("product.txt","r") as fp:
                 for line in fp:
                     item = line.upper()
                     line_list = item.split( )
                     if line_list[1] == search_by:
+                        print('This is the searched product')
+                        print()
                         print(line)
+                        print('*' *49)
 
                     elif line_list[2] == search_by:
+                        print('This is the searched product')
+                        print()
                         print(line)
+                        print('*' *49)
 
                     elif line_list[0] == search_by + ".":
-                        print(line)    
+                        print('This is the searched product')
+                        print()
+                        print(line) 
+                        print('*' *49)   
 
 # Print all products
 
         elif short_code == '3':            
             with open("product.txt", "r") as stock:
                 with open("temp.txt", "w") as temp:
-                    print (stock.read())            #prints stock available
-                    for line in stock:
-                        if line == stock:
-                            # stock.append(line)
-                            print(line)          
+                    print('These are the products available:')
+                    print()
+                    print (stock.read()) 
+                    print('*' *49)            
+                                                        
 # Update Product details                         
         elif short_code == '5':
 
-            import os         
+            import os    
             
 
             def update_line():
-                product_to_update = input("Search product id: ")          
-                
-                
+                product_to_update = input("Search product id: ")     
+                               
                 with open("product.txt", "r") as fp:
                     with open ('temp.txt', 'w') as temp:
                         for line in fp:
                             line_list = line.split( )                        
-                                                    
+                                       
                             
                             if line_list[0] == product_to_update +".":
                                 print(line)
@@ -147,8 +159,11 @@ def product_menu():
                                 line=line.replace(line_list[2],pp)
                                 line=line.replace(line_list[3],pq)                                   
                                     
-                                                                
-                                print(line)
+                                print('*' *49)  
+                                print('Entry has been updated to' ) 
+                                print()                            
+                                print(line )
+                                print('*' *49)
                             temp.write(line)
                 import os              
 
@@ -163,6 +178,10 @@ def product_menu():
         elif short_code == '4':
             def deleting_line():
                 product_to_delete = input("Search product id: ")
+                print('Product has been deleted')
+                print('*'*49)
+                print('These are the remaining products')
+                print()
                 
                 with open("product.txt", "r") as fp:
                     with open ('temp.txt', 'w') as temp:
@@ -170,12 +189,16 @@ def product_menu():
                         for line in fp:
                             line_list = line.split( )
                             # print(line_list[3])
-                            if line_list[0] != product_to_delete+".":
+                            if line_list[0] != product_to_delete+".":                                
                                 print(line)
+                                
+                                # print('The product has been deleted')
                                 temp.write(line)
+                                
                 import os              
 
                 os.replace('temp.txt', 'product.txt')
+                print('*' *49)
             deleting_line()                             
                          
 
