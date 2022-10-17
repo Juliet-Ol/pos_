@@ -4,8 +4,11 @@ from purchase import purchase_menu
 
 
 def main_menu():
-    print("Thank you for doing business with us")
-
+    print('*' *49)
+    print(f"\t\t Welcome to bright Shop".title())
+    print('*' *49)
+    print(f"\tThis is the main menu")
+    print('*' *49)
     while True:
         print(""" press this code to go to the particular menu: 
         press 1 - Customer menu , 
