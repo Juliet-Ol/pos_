@@ -1,17 +1,17 @@
 class Customer:    
     
-    def __init__(self,  first_name, last_name, mobile_number, email):
+    def __init__(self,  first_name, last_name, mobile_number, email_address):
         
 
         # self.customer_id = customer_id
         self.first_name = first_name
         self.last_name = last_name
         self.mobile_number = mobile_number 
-        self.email = email 
+        self.email_address = email_address 
 
 
     def __str__(self):
-        return f" {self.first_name} {self.last_name} {self.mobile_number} {self.mobile_number}\n"        
+        return f" {self.first_name} {self.last_name} {self.mobile_number} {self.mobile_number} {self.email_address}\n"        
     
 
 def customer_menu():
@@ -51,7 +51,7 @@ def customer_menu():
                 print()
 
                 print("Enter email address:...")
-                email = input()
+                email_address = input()
                 print()
                         
                 count = 0
@@ -62,14 +62,14 @@ def customer_menu():
 
                 # print('number of non-blank lines', count)
                             
-                p1 = Customer(first_name, last_name, mobile_number, email)
+                p1 = Customer(first_name, last_name, mobile_number, email_address)
                 text_file = open("customer.txt","a+")
                 text_file.readline()
                 update_count = count +1
                 # print (p1)            
                 
                 customer_list = []
-                person = (f"{update_count}. {p1.first_name} {p1.last_name} {p1.mobile_number} {p1.email}")
+                person = (f"{update_count}. {p1.first_name} {p1.last_name} {p1.mobile_number} {p1.email_address}")
                 
                 customer_list.append(person)
                 print(customer_list)
@@ -83,7 +83,7 @@ def customer_menu():
                 text_file.close()
                 
                 print('\n')
-                print(f"New customer:.. Name {first_name} {last_name} Mobile number {mobile_number} email {email} has been created!")
+                print(f"New customer:.. Name {first_name} {last_name} Mobile number {mobile_number} email {email_address} has been created!")
                 print('\n')
                 print('*' *49)
             create_a_customer()    
