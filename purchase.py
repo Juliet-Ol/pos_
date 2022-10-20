@@ -1,11 +1,23 @@
 
 # from itertools import product
-from datetime import datetime
 import os
+
+import email
+# from multiprocessing import context
+from datetime import datetime
 from click import confirm
 # from nbformat import write
 from customer import customer_menu
 from product import product_menu
+from gmail import send_receipt
+from email.message import EmailMessage
+
+
+# import sys
+# import fileinput
+# import smtplib
+
+
 
 
 class Purchase:
@@ -27,10 +39,9 @@ class Purchase:
 
 purchase_list = []
 inventory = 0
-# uza = []
 net_price = 0
 item = None
-receipts =[]
+receipt1 =[]
 
 
 
@@ -61,14 +72,13 @@ def purchase_menu():
                 search_customer_by_id = input("Enter customer Id:....")
                 with open('customer.txt', 'r') as fp:
                     count = 0
-                    for line in fp:
-                        name = line.upper()
-                        line_list = name.split( )
-                        if line_list[0] == search_customer_by_id + ".":
-                            print()
+                    for customer_line in fp:
+                        customer_line_list = customer_line.split()
+                        if customer_line_list[0] == search_customer_by_id + ".":
+                            print(f'Selected {customer_line_list[1]}')
                             print('*' *49)
-                            print(line)
-                            customer = line
+                            full_name = customer_line_list[1] +" "+ customer_line_list[2]
+                            email = customer_line_list[4]
                         else:                            
                             count += 1
                             
@@ -78,9 +88,9 @@ def purchase_menu():
                                     purchase_menu() 
                                 else:                                     
                                     customer_menu() 
-                return(customer)               
+                return [full_name, email]            
 
-            customer = search_customer_to_purchase()  
+            full_name, email = search_customer_to_purchase()  
             # print(customer)                
          
 # Search product by id on availability  
@@ -94,6 +104,7 @@ def purchase_menu():
             def search_product_id():
                 print()
                 search_by = input("Search product by id:....").lower()
+                
                 with open("product.txt","r") as fp:
                     count = 0
                     for line in fp:
@@ -104,10 +115,11 @@ def purchase_menu():
                             print()
                             print(line_list[0], line_list[1], line_list[2], line_list[3] )                         
                             
-                                                     
+                                                        
                             item_name = line_list[1]  
                             item = line_list[2] 
-                            rem_stock = line_list[3]                   
+                            rem_stock = line_list[3]
+                                             
 
                         else:
                             count += 1                            
@@ -118,7 +130,7 @@ def purchase_menu():
                                 else:                                     
                                     search_customer_to_purchase()                      
 
-                return [item_name, item, rem_stock, search_by]                
+                return [item_name, item, rem_stock, search_by]              
 
 #Check on quatity of stock availability
             
@@ -129,115 +141,88 @@ def purchase_menu():
                     if line.strip():
                         lines_of_products += 1
             
-            def stock_balance():
-            
-                search_by = input("Search product by id:....").lower()
-                with open("product.txt","r") as fp:
-                    count = 0
-                    for line in fp:
-                        product_item = line.lower()
-                        line_list = product_item.split( )                                              
-                                                    
-                        if line_list[0] == search_by + ".":
-                            print(line_list[3])                   
-                                                                                
-                            stock = line_list[3]                      
-
-                        else:
-                            count += 1                            
-                            if count == lines_of_products:
-                                if confirm('''Quantity not enough. press 'y' to go to purchase menu or 'n' 
-                                to search customer for purchase'''):                                                               
-                                    make_a_purchase() 
-                                    break
-                                else:                                     
-                                    search_customer_to_purchase()                      
-
-                return (stock) 
-                                                         
-                             
-
 # Make a purchase
-            customer
             
+            
+            inventory = []
+
+            def provide_quantity(product_quantity):
+                print(f'Enter quantity: [1-{product_quantity}]')
+                print(full_name)
+                purchase_quantity = int(input("Enter quantity:.."))
+                if (purchase_quantity > product_quantity):
+                    print(f'Not enough Stock. Available stock is {product_quantity}')
+                    provide_quantity(product_quantity)
+                
+                return purchase_quantity
             
             def make_a_purchase(): 
+
                 print('*' *49)
                 print()                   
                 sale = input('''what would you like to buy today? Press enter to proceed:..''').lower()
-                print()
-                
+                print()                
                                 
-                product_name, product_price, product_quantity, product_id, = (search_product_id()) 
+                product_name, raw_product_price, raw_product_quantity, product_id, = (search_product_id()) 
                 # print(product_price, product_id) 
                 product_name = product_name
-                product_price = float(product_price)
-                product_quantity = int(product_quantity)
-                print('enter quantity....')
-                purchase_quantity = int(input())
-                product_quantity = product_quantity - purchase_quantity
-                
-
-                # global inventory
+                product_price = float(raw_product_price)
+                product_quantity = int(raw_product_quantity)
                 # print('enter quantity....')
-                # # stock_balance = stock_balance() - purchase_quantity
+                purchase_quantity = provide_quantity(product_quantity)
                 
-                # inventory = (int(stock_balance())) - purchase_quantity
-                
-                # for line in stock_balance():
-                    
-                #     if(int(stock_balance())>= purchase_quantity):
-                #         inventory = int(stock_balance()) -purchase_quantity                       
-                #         break                                       
-                       
-                #     else:
-                #         print("Less Stock")
-                      
-
-                # for i in range(1,product_quantity-1):
-                #     while True:
-                #         print() 
-                # product_quantity = product_quantity - purchase_quantity          
-                
-                
-
                         
                 count = 0
                 with open('purchase.txt') as fp:
                     for line in fp:
                         if line.strip():
-                            count += 1
-                    # print('number of non-blank lines', count)   
+                            count += 1                   
 
                     
                     text_file = open("purchase.txt","a+")
                     text_file.readline()
                     update_count = count +1
-                    # print (p1)            
+                             
                     
                     total_price =  product_price * purchase_quantity 
                     global net_price
-                    net_price = net_price + total_price                                  
+                    net_price = net_price + total_price                              
+                   
+                    
+                    remaining_stock = int(raw_product_quantity) - purchase_quantity
+                    x = f'{product_name} {raw_product_price} {raw_product_quantity}'
+                    y = f'{product_name} {raw_product_price} {remaining_stock}'
 
-                    # uza = [f"""{update_count}. {customer} {product_name}  price {product_price} quantity {purchase_quantity} total price {total_price} To Pay {net_price}"""]                    
-                    uza = {"p_id": update_count,
-                        "customer": customer,
+                    from pathlib import Path
+                    file = Path('product.txt')
+                    file.write_text(file.read_text().replace(x, y))
+
+                    print(full_name)
+                    print(email)
+                                        
+                    uza = {"purchase_id": update_count,
+                        "customer": full_name,
                         "product": product_name, 
                         "quantity": purchase_quantity,  
                         "price": total_price,
-                        "to pay": net_price}   
+                        "to pay": net_price} 
 
+                   
+
+                    text_file.write(f"{uza}\n")        
+                    text_file.close()
 
                     print('*'*49)
                     purchase_list.append(uza)
-                    print(uza)
-                    receipt ={
-                        product_name,
-                        purchase_quantity,
-                        total_price
-                    }
-                    receipts.append(receipt)
-                    print(receipts,"this is a receipt")
+                    print(f"""{update_count}. {full_name} {product_name}  price {product_price} quantity {purchase_quantity} total price {total_price} To Pay {net_price}""")
+
+                    receipts = [product_name, purchase_quantity, total_price] 
+                
+                        
+
+                    for receipts in receipts:
+                        receipt1.append(receipts)
+                        print(receipts)
                       
 
                     print("those are the items purchased") 
@@ -249,26 +234,27 @@ def purchase_menu():
                     else:
                         print("here are the items purchased", uza)                                                              
                         
-                    text_file.write(f"{uza}\n")        
-                    text_file.close()                      
+                                          
           
-                                  
+                             
                                  
-            make_a_purchase() 
+            make_a_purchase()
+            send_receipt(full_name, email, purchase_list)
 
             
         
             import datetime
-            # purchase_list
-            # item 
+            
             shop_name = "bright shop"
             shop_street = "Tom Mboya Sreet"
             cashier_name = "John Doe"
             now = datetime.datetime.now()
             date_time = now.strftime(("%Y-%m-%d %H:%M:%S"))                       
-            receipt_message = "Thank you for doing business with us!!"                            
+            receipt_message = "Thank you for doing business with us!!"    
+                    
+                                       
             
-            def receipt():           
+            def receipt():       
 
                 print()
                 print('=' *55 )
@@ -278,7 +264,7 @@ def purchase_menu():
                 print()
                 print('=' *55 )
                 print()             
-                print(f'Customer:..{customer}')
+                print(f'Customer: {full_name}')
                 print('=' *55 )
                 print() 
                 print(f'Cashier: {cashier_name}')
@@ -287,16 +273,22 @@ def purchase_menu():
                 print('*' *55 )
                 print('PURCHASE')
                 print("product_name || product_quantity|| total_price")
-                print(receipts)
+                # print(f'{receipt1[0]}\t\t {receipt1[1]}\t\t {receipt1[2]}')
+                for receipt in receipt1:
+                    print(receipt)
+                print(f'{receipt1[0]}  {receipt1[1]} {receipt1[2]}')
                 print('*' *55 )    
-                print(f'Net Total (to pay)\t\t\t\t Kes{net_price:.2f}')
+                print(f'Net Total (amount paid)\t\t\t\t Kes {net_price:.2f}')
                 print()
                 print(f'\t{receipt_message}')
                 print('=' *55 )               
                 
             receipt() 
-            print(receipt)   
-
+            print(receipt)
+            
+            # import ssl
+            # from pathlib import Path             
+  
         elif short_code == '2':
             with open("purchase.txt", "r") as stock:
                 with open("temp.txt", "w") as temp:
