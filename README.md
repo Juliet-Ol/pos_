@@ -1,24 +1,25 @@
 # POS
 
-POS - this is a point of sale system command line based built using python. The system has 3 modules that is the Customer, Product and Purchase and operates using CRUD operations. 
+POS - this is a point of sale system command line based built using python. The system has 3 modules that is the Customer, Product and Purchase that operates using CRUD operations. 
 
 ---
 ## Table of contents
 ---
 1. [Features](#features)
-2. [Installation](#Installation / Setup instruction)
+2. [Installation](#Installation-/-Setup instruction)
 3. [Technologies](#technologies-used)
-4. [Setup](#Project Setup and instructions)
-5. [Author](#contact information)    
+4. [Setup](#Project-Setup-and-instructions)
+5. [Author](#contact-information)    
 
 
 ## Features
 The user can perform the following functions:
 
-- A user can perfom all the CRUD operations that is create, read, update and delte in the 3 modules
+- A user can perfom all the CRUD operations that is create, read, update and delete in the 3 modules
 - A user can view a list of customers, products and purchase details saved in a text file on the command line
 - A user can make a sale on products available in the system
 - A user can print a receipt after completing the transaction
+- A user can send an email of the receipt after completing the transaction
 
 
 ## Installation / Setup instruction
