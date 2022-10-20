@@ -96,11 +96,10 @@ def product_menu():
                 press 3 - product id. 
                 """) 
 
-            short_code = input()
-
-            
+            short_code = input()            
             search_by = input("Search product:....").lower()
             print('*' *49) 
+
             with open("product.txt","r") as fp:
                 for line in fp:
                     item = line.upper()
@@ -130,7 +129,7 @@ def product_menu():
                 with open("temp.txt", "w") as temp:
                     print('These are the products available:')
                     print()
-                    print (stock.read()) 
+                    print (stock.read())
                     print('*' *49)            
                                                         
 # Update Product details                         
@@ -141,7 +140,7 @@ def product_menu():
 
             def update_line():
                 product_to_update = input("Search product id: ")     
-                               
+                print('*' *49)               
                 with open("product.txt", "r") as fp:
                     with open ('temp.txt', 'w') as temp:
                         for line in fp:
